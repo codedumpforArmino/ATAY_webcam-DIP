@@ -9,6 +9,22 @@ namespace ATAY_webcam_image_processing
 {
     static class ImageProcessingLib
     {
+        public static void GreyScale(ref Bitmap input, ref Bitmap output)
+        {
+            Color pixel;
+            int grey_value;
+
+            for (int row = 0; row < input.Width; row++)
+            {
+                for (int col = 0; col < input.Height; col++)
+                {
+                    pixel = input.GetPixel(row, col);
+                    grey_value = (int)(pixel.R + pixel.G + pixel.B) / 3;
+                    pixel = Color.FromArgb(grey_value, grey_value, grey_value);
+                    output.SetPixel(row, col, pixel);
+                }
+            }
+        }
         public static void InvertColor(ref Bitmap input, ref Bitmap output)
         {
             Color pixel;

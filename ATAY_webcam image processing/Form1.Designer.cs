@@ -40,6 +40,12 @@
             sepiaToolStripMenuItem = new ToolStripMenuItem();
             activateCameraToolStripMenuItem = new ToolStripMenuItem();
             deactivateCameraToolStripMenuItem = new ToolStripMenuItem();
+            cameraToolStripMenuItem = new ToolStripMenuItem();
+            greyscaleToolStripMenuItem1 = new ToolStripMenuItem();
+            PixelCopyStripMenuItem1 = new ToolStripMenuItem();
+            inversionToolStripMenuItem1 = new ToolStripMenuItem();
+            histogramToolStripMenuItem1 = new ToolStripMenuItem();
+            sepiaToolStripMenuItem1 = new ToolStripMenuItem();
             openFileDialog1 = new OpenFileDialog();
             saveFileDialog1 = new SaveFileDialog();
             PicBox_Input = new PictureBox();
@@ -52,7 +58,7 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(24, 24);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, dIPToolStripMenuItem, activateCameraToolStripMenuItem, deactivateCameraToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, dIPToolStripMenuItem, activateCameraToolStripMenuItem, deactivateCameraToolStripMenuItem, cameraToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1498, 33);
@@ -136,6 +142,48 @@
             deactivateCameraToolStripMenuItem.Text = "Deactivate Camera";
             deactivateCameraToolStripMenuItem.Click += deactivateCameraToolStripMenuItem_Click;
             // 
+            // cameraToolStripMenuItem
+            // 
+            cameraToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { greyscaleToolStripMenuItem1, PixelCopyStripMenuItem1, inversionToolStripMenuItem1, histogramToolStripMenuItem1, sepiaToolStripMenuItem1 });
+            cameraToolStripMenuItem.Name = "cameraToolStripMenuItem";
+            cameraToolStripMenuItem.Size = new Size(88, 29);
+            cameraToolStripMenuItem.Text = "Camera";
+            // 
+            // greyscaleToolStripMenuItem1
+            // 
+            greyscaleToolStripMenuItem1.Name = "greyscaleToolStripMenuItem1";
+            greyscaleToolStripMenuItem1.Size = new Size(270, 34);
+            greyscaleToolStripMenuItem1.Text = "Pixel Copy";
+            greyscaleToolStripMenuItem1.Click += greyscaleToolStripMenuItem1_Click_1;
+            // 
+            // PixelCopyStripMenuItem1
+            // 
+            PixelCopyStripMenuItem1.Name = "PixelCopyStripMenuItem1";
+            PixelCopyStripMenuItem1.Size = new Size(270, 34);
+            PixelCopyStripMenuItem1.Text = "Greyscale";
+            PixelCopyStripMenuItem1.Click += greyscaleToolStripMenuItem1_Click;
+            // 
+            // inversionToolStripMenuItem1
+            // 
+            inversionToolStripMenuItem1.Name = "inversionToolStripMenuItem1";
+            inversionToolStripMenuItem1.Size = new Size(270, 34);
+            inversionToolStripMenuItem1.Text = "Inversion";
+            inversionToolStripMenuItem1.Click += inversionToolStripMenuItem1_Click;
+            // 
+            // histogramToolStripMenuItem1
+            // 
+            histogramToolStripMenuItem1.Name = "histogramToolStripMenuItem1";
+            histogramToolStripMenuItem1.Size = new Size(270, 34);
+            histogramToolStripMenuItem1.Text = "Histogram";
+            histogramToolStripMenuItem1.Click += histogramToolStripMenuItem1_Click;
+            // 
+            // sepiaToolStripMenuItem1
+            // 
+            sepiaToolStripMenuItem1.Name = "sepiaToolStripMenuItem1";
+            sepiaToolStripMenuItem1.Size = new Size(270, 34);
+            sepiaToolStripMenuItem1.Text = "Sepia";
+            sepiaToolStripMenuItem1.Click += sepiaToolStripMenuItem1_Click;
+            // 
             // openFileDialog1
             // 
             openFileDialog1.FileName = "openFileDialog1";
@@ -201,5 +249,11 @@
         private ToolStripMenuItem sepiaToolStripMenuItem;
         private ToolStripMenuItem activateCameraToolStripMenuItem;
         private ToolStripMenuItem deactivateCameraToolStripMenuItem;
+        private ToolStripMenuItem cameraToolStripMenuItem;
+        private ToolStripMenuItem PixelCopyStripMenuItem1;
+        private ToolStripMenuItem greyscaleToolStripMenuItem1;
+        private ToolStripMenuItem inversionToolStripMenuItem1;
+        private ToolStripMenuItem histogramToolStripMenuItem1;
+        private ToolStripMenuItem sepiaToolStripMenuItem1;
     }
 }

@@ -1,12 +1,13 @@
 using System.Drawing;
-using WebCamLib;
+using Emgu.CV;
+using Emgu.CV.Structure;
 
 namespace ATAY_webcam_image_processing
 {
     public partial class Form1 : Form
     {
         Bitmap loaded, processed;
-        Device[] currDevices;
+        VideoCapture webcam;
         public Form1()
         {
             InitializeComponent();
@@ -116,7 +117,6 @@ namespace ATAY_webcam_image_processing
         }
 
         //histogram
-
         private void histogramToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             int[] histData = new int[256];
@@ -165,18 +165,84 @@ namespace ATAY_webcam_image_processing
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            currDevices = DeviceManager.GetAllDevices();
+            webcam = new VideoCapture();
+        }
+
+        private void stream(object sender, EventArgs e)
+        {
+            var img = webcam.QueryFrame().ToImage<Bgr, byte>();
+            Bitmap bmp = img.ToBitmap();
+            PicBox_Input.Image = bmp;
         }
 
         private void activateCameraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            currDevices[0].ShowWindow(PicBox_Input);
+            Application.Idle += stream;
         }
 
         private void deactivateCameraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            currDevices[0].Stop();
-            PicBox_Output.Image = null;
+            Application.Idle -= stream;
+            PicBox_Input.Image = null;
+        }
+
+        //Camera Pixel Copy
+        private void greyscaleToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var img = webcam.QueryFrame().ToImage<Bgr, byte>();
+            Bitmap bmp = img.ToBitmap();
+            processed = new Bitmap(bmp.Width, bmp.Height);
+
+            Color pixel;
+            int grey_value;
+
+            for (int row = 0; row < bmp.Width; row++)
+            {
+                for (int col = 0; col < bmp.Height; col++)
+                {
+                    pixel = bmp.GetPixel(row, col);
+                    grey_value = (int)(pixel.R + pixel.G + pixel.B) / 3;
+                    pixel = Color.FromArgb(grey_value, grey_value, grey_value);
+                    processed.SetPixel(row, col, pixel);
+                }
+            }
+
+            PicBox_Output.Image = processed;
+        }
+        //Camera Pixel Copy
+        private void greyscaleToolStripMenuItem1_Click_1(object sender, EventArgs e)
+        {
+            PicBox_Output.Image = PicBox_Input.Image;
+        }
+
+        //Camera Invert
+        private void inversionToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var img = webcam.QueryFrame().ToImage<Bgr, byte>();
+            Bitmap bmp = img.ToBitmap();
+            processed = new Bitmap(bmp.Width, bmp.Height);
+            ImageProcessingLib.InvertColor(ref bmp, ref processed);
+            PicBox_Output.Image = processed;
+        }
+
+        //Camera Sepia
+        private void sepiaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var img = webcam.QueryFrame().ToImage<Bgr, byte>();
+            Bitmap bmp = img.ToBitmap();
+            processed = new Bitmap(bmp.Width, bmp.Height);
+            ImageProcessingLib.Sepia(ref bmp, ref processed);
+            PicBox_Output.Image = processed;
+        }
+
+        //Camera Histogram
+        private void histogramToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var img = webcam.QueryFrame().ToImage<Bgr, byte>();
+            Bitmap bmp = img.ToBitmap();
+            processed = new Bitmap(bmp.Width, bmp.Height);
+            ImageProcessingLib.Histogram(ref bmp, ref processed);
+            PicBox_Output.Image = processed;
         }
     }
 }

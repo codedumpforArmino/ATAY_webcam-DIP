@@ -8,6 +8,8 @@ namespace ATAY_webcam_image_processing
     {
         Bitmap loaded, processed;
         VideoCapture webcam;
+        Boolean _isDoubleImage = false;
+
         public Form1()
         {
             InitializeComponent();
@@ -20,9 +22,18 @@ namespace ATAY_webcam_image_processing
 
         private void openFileDialog1_FileOk_1(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            loaded = new Bitmap(openFileDialog1.FileName);
-            PicBox_Input.Image = loaded;
-            processed = new Bitmap(loaded.Width, loaded.Height);
+            if (!_isDoubleImage)
+            {
+                loaded = new Bitmap(openFileDialog1.FileName);
+                PicBox_Input.Image = loaded;
+                processed = new Bitmap(loaded.Width, loaded.Height);
+            }
+            else
+            {
+                processed = new Bitmap(openFileDialog1.FileName);
+                PicBox_Output.Image = processed;
+                _isDoubleImage = false;
+            }
         }
 
         //Pixel Copy
@@ -45,14 +56,14 @@ namespace ATAY_webcam_image_processing
         //Greyscale
         private void greyscaleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ImageProcessingLib.GreyScale(ref loaded,ref processed);
+            ImageProcessingLib.GreyScale(ref loaded, ref processed);
             PicBox_Output.Image = processed;
         }
 
         //Color Inversion
         private void inversionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ImageProcessingLib.InvertColor(ref loaded,ref processed);
+            ImageProcessingLib.InvertColor(ref loaded, ref processed);
             PicBox_Output.Image = processed;
         }
 
@@ -107,17 +118,13 @@ namespace ATAY_webcam_image_processing
         //Camera Greyscale
         private void greyscaleToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            var img = webcam.QueryFrame().ToImage<Bgr, byte>();
-            Bitmap bmp = img.ToBitmap();
-            processed = new Bitmap(bmp.Width, bmp.Height);
-
-            ImageProcessingLib.GreyScale(ref bmp, ref processed);
-            PicBox_Output.Image = processed;
+            timer1.Enabled = true;
         }
         //Camera Pixel Copy
         private void greyscaleToolStripMenuItem1_Click_1(object sender, EventArgs e)
         {
             PicBox_Output.Image = PicBox_Input.Image;
+            //timer1.Enabled = true;
         }
 
         //Camera Invert
@@ -147,6 +154,28 @@ namespace ATAY_webcam_image_processing
             Bitmap bmp = img.ToBitmap();
             processed = new Bitmap(bmp.Width, bmp.Height);
             ImageProcessingLib.Histogram(ref bmp, ref processed);
+            PicBox_Output.Image = processed;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            var img = webcam.QueryFrame().ToImage<Bgr, byte>();
+            Bitmap bmp = img.ToBitmap();
+            processed = new Bitmap(bmp.Width, bmp.Height);
+
+            ImageProcessingLib.GreyScale(ref bmp, ref processed);
+            PicBox_Output.Image = processed;
+        }
+
+        private void Btn_LoadImage_Click(object sender, EventArgs e)
+        {
+            _isDoubleImage = true;
+            openFileDialog1.ShowDialog();
+        }
+
+        private void btn_Subtract_Click(object sender, EventArgs e)
+        {
+            ImageProcessingLib.Subtraction(ref loaded, ref processed);
             PicBox_Output.Image = processed;
         }
     }

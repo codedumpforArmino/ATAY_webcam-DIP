@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             openToolStripMenuItem = new ToolStripMenuItem();
@@ -50,6 +51,9 @@
             saveFileDialog1 = new SaveFileDialog();
             PicBox_Input = new PictureBox();
             PicBox_Output = new PictureBox();
+            timer1 = new System.Windows.Forms.Timer(components);
+            Btn_LoadImage = new Button();
+            btn_Subtract = new Button();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PicBox_Input).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PicBox_Output).BeginInit();
@@ -152,35 +156,35 @@
             // greyscaleToolStripMenuItem1
             // 
             greyscaleToolStripMenuItem1.Name = "greyscaleToolStripMenuItem1";
-            greyscaleToolStripMenuItem1.Size = new Size(270, 34);
+            greyscaleToolStripMenuItem1.Size = new Size(198, 34);
             greyscaleToolStripMenuItem1.Text = "Pixel Copy";
             greyscaleToolStripMenuItem1.Click += greyscaleToolStripMenuItem1_Click_1;
             // 
             // PixelCopyStripMenuItem1
             // 
             PixelCopyStripMenuItem1.Name = "PixelCopyStripMenuItem1";
-            PixelCopyStripMenuItem1.Size = new Size(270, 34);
+            PixelCopyStripMenuItem1.Size = new Size(198, 34);
             PixelCopyStripMenuItem1.Text = "Greyscale";
             PixelCopyStripMenuItem1.Click += greyscaleToolStripMenuItem1_Click;
             // 
             // inversionToolStripMenuItem1
             // 
             inversionToolStripMenuItem1.Name = "inversionToolStripMenuItem1";
-            inversionToolStripMenuItem1.Size = new Size(270, 34);
+            inversionToolStripMenuItem1.Size = new Size(198, 34);
             inversionToolStripMenuItem1.Text = "Inversion";
             inversionToolStripMenuItem1.Click += inversionToolStripMenuItem1_Click;
             // 
             // histogramToolStripMenuItem1
             // 
             histogramToolStripMenuItem1.Name = "histogramToolStripMenuItem1";
-            histogramToolStripMenuItem1.Size = new Size(270, 34);
+            histogramToolStripMenuItem1.Size = new Size(198, 34);
             histogramToolStripMenuItem1.Text = "Histogram";
             histogramToolStripMenuItem1.Click += histogramToolStripMenuItem1_Click;
             // 
             // sepiaToolStripMenuItem1
             // 
             sepiaToolStripMenuItem1.Name = "sepiaToolStripMenuItem1";
-            sepiaToolStripMenuItem1.Size = new Size(270, 34);
+            sepiaToolStripMenuItem1.Size = new Size(198, 34);
             sepiaToolStripMenuItem1.Text = "Sepia";
             sepiaToolStripMenuItem1.Click += sepiaToolStripMenuItem1_Click;
             // 
@@ -211,11 +215,38 @@
             PicBox_Output.TabIndex = 2;
             PicBox_Output.TabStop = false;
             // 
+            // timer1
+            // 
+            timer1.Interval = 1;
+            timer1.Tick += timer1_Tick;
+            // 
+            // Btn_LoadImage
+            // 
+            Btn_LoadImage.Location = new Point(985, 809);
+            Btn_LoadImage.Name = "Btn_LoadImage";
+            Btn_LoadImage.Size = new Size(151, 34);
+            Btn_LoadImage.TabIndex = 3;
+            Btn_LoadImage.Text = "Load Image";
+            Btn_LoadImage.UseVisualStyleBackColor = true;
+            Btn_LoadImage.Click += Btn_LoadImage_Click;
+            // 
+            // btn_Subtract
+            // 
+            btn_Subtract.Location = new Point(1258, 809);
+            btn_Subtract.Name = "btn_Subtract";
+            btn_Subtract.Size = new Size(112, 34);
+            btn_Subtract.TabIndex = 4;
+            btn_Subtract.Text = "Subtract";
+            btn_Subtract.UseVisualStyleBackColor = true;
+            btn_Subtract.Click += btn_Subtract_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1498, 855);
+            Controls.Add(btn_Subtract);
+            Controls.Add(Btn_LoadImage);
             Controls.Add(PicBox_Output);
             Controls.Add(PicBox_Input);
             Controls.Add(menuStrip1);
@@ -255,5 +286,8 @@
         private ToolStripMenuItem inversionToolStripMenuItem1;
         private ToolStripMenuItem histogramToolStripMenuItem1;
         private ToolStripMenuItem sepiaToolStripMenuItem1;
+        private System.Windows.Forms.Timer timer1;
+        private Button Btn_LoadImage;
+        private Button btn_Subtract;
     }
 }

@@ -25,6 +25,7 @@ namespace ATAY_webcam_image_processing
                 }
             }
         }
+
         public static void InvertColor(ref Bitmap input, ref Bitmap output)
         {
             Color pixel;
@@ -106,5 +107,32 @@ namespace ATAY_webcam_image_processing
             }
         }
 
+        public static void Subtraction(ref Bitmap background, ref Bitmap image)
+        {
+            //maybe ako iimplement....maybe dli sad...basin makaya
+            int greyGreen = 255 / 3;
+            int threshold = 5;
+
+            Color pixel, backpixel;
+            Bitmap subtracted = new Bitmap(background.Width, background.Height);
+
+            for (int row = 0; row < image.Width; row++)
+            {
+                for (int col = 0; col < image.Height; col++)
+                {
+
+                    pixel = image.GetPixel(row, col);
+                    backpixel = background.GetPixel(row, col);
+
+                    subtracted.SetPixel(row, col, Math.Abs((pixel.R + pixel.G + pixel.B) / 3 - greyGreen) < threshold 
+                        ? background.GetPixel(row, col) 
+                        : image.GetPixel(row, col));
+                }
+            }
+            image = subtracted;
+            return;
+        }
+
+        
     }
 }

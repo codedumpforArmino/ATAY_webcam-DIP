@@ -1,6 +1,7 @@
 using System.Drawing;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using ImageProcess2;
 
 namespace ATAY_webcam_image_processing
 {
@@ -9,6 +10,7 @@ namespace ATAY_webcam_image_processing
         Bitmap loaded, processed;
         VideoCapture webcam;
         Boolean _isDoubleImage = false;
+        int CameraOperation;
 
         public Form1()
         {
@@ -112,6 +114,7 @@ namespace ATAY_webcam_image_processing
         private void deactivateCameraToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Idle -= stream;
+            timer1.Enabled = false;
             PicBox_Input.Image = null;
         }
 
@@ -119,42 +122,33 @@ namespace ATAY_webcam_image_processing
         private void greyscaleToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             timer1.Enabled = true;
+            CameraOperation = 0;
         }
         //Camera Pixel Copy
         private void greyscaleToolStripMenuItem1_Click_1(object sender, EventArgs e)
         {
             PicBox_Output.Image = PicBox_Input.Image;
-            //timer1.Enabled = true;
         }
 
         //Camera Invert
         private void inversionToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            var img = webcam.QueryFrame().ToImage<Bgr, byte>();
-            Bitmap bmp = img.ToBitmap();
-            processed = new Bitmap(bmp.Width, bmp.Height);
-            ImageProcessingLib.InvertColor(ref bmp, ref processed);
-            PicBox_Output.Image = processed;
+            timer1.Enabled = true;
+            CameraOperation = 1;
         }
 
         //Camera Sepia
         private void sepiaToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            var img = webcam.QueryFrame().ToImage<Bgr, byte>();
-            Bitmap bmp = img.ToBitmap();
-            processed = new Bitmap(bmp.Width, bmp.Height);
-            ImageProcessingLib.Sepia(ref bmp, ref processed);
-            PicBox_Output.Image = processed;
+            timer1.Enabled = true;
+            CameraOperation = 2;
         }
 
         //Camera Histogram
         private void histogramToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            var img = webcam.QueryFrame().ToImage<Bgr, byte>();
-            Bitmap bmp = img.ToBitmap();
-            processed = new Bitmap(bmp.Width, bmp.Height);
-            ImageProcessingLib.Histogram(ref bmp, ref processed);
-            PicBox_Output.Image = processed;
+            timer1.Enabled = true;
+            CameraOperation = 3;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -163,7 +157,22 @@ namespace ATAY_webcam_image_processing
             Bitmap bmp = img.ToBitmap();
             processed = new Bitmap(bmp.Width, bmp.Height);
 
-            ImageProcessingLib.GreyScale(ref bmp, ref processed);
+            switch (CameraOperation)
+            {
+                case 0:
+                    ImageProcessingLib.GreyScale(ref bmp, ref processed);
+                    break;
+                case 1:
+                    ImageProcessingLib.InvertColor(ref bmp, ref processed);
+                    break;
+                case 2:
+                    ImageProcessingLib.Sepia(ref bmp, ref processed);
+                    break;
+                case 3:
+                    ImageProcessingLib.Histogram(ref bmp, ref processed);
+                    break;
+            }
+
             PicBox_Output.Image = processed;
         }
 
@@ -177,6 +186,51 @@ namespace ATAY_webcam_image_processing
         {
             ImageProcessingLib.Subtraction(ref loaded, ref processed);
             PicBox_Output.Image = processed;
+        }
+
+        private void gaucianBlurToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PicBox_Output.Image = ImageProcessingLib.GaussianBlur(loaded, 4);
+        }
+
+        private void sharpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PicBox_Output.Image = ImageProcessingLib.Sharpen(loaded, 11);
+        }
+
+        private void meanRemovalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PicBox_Output.Image = ImageProcessingLib.MeanRemoval(loaded, 9);
+        }
+
+        private void LaplascianToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PicBox_Output.Image = ImageProcessingLib.Emboss(loaded, 1);
+        }
+
+        private void horzVertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PicBox_Output.Image = ImageProcessingLib.Emboss(loaded, 2);
+        }
+
+        private void allDirectionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PicBox_Output.Image = ImageProcessingLib.Emboss(loaded, 3);
+        }
+
+        private void lossyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PicBox_Output.Image = ImageProcessingLib.Emboss(loaded, 4);
+        }
+
+        private void horizontalOnlyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PicBox_Output.Image = ImageProcessingLib.Emboss(loaded, 5);
+        }
+
+        private void verticalOnlyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PicBox_Output.Image = ImageProcessingLib.Emboss(loaded, 6);
         }
     }
 }

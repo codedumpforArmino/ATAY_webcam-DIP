@@ -206,9 +206,18 @@ namespace ATAY_webcam_image_processing
         private void LaplascianToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //processed = ImageProcessingLib.Emboss(loaded, 1);
+            float[] Circle_r = new float[100];
             MessageBox.Show("Drawing Circle");
-            Bitmap detectedCircle = DetectionLibrary.ProcessImage(loaded);
+            Bitmap detectedCircle = DetectionLibrary.ProcessImage(loaded, ref Circle_r);
             PicBox_Output.Image = detectedCircle;
+
+            int x = 0;
+            while (Circle_r[x] != 0)
+            {
+                txtBox_Report.AppendText(Circle_r[x].ToString());
+                txtBox_Report.AppendText("\n");
+                x++;
+            }
 
         }
 

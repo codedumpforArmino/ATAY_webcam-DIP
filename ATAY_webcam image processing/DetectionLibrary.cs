@@ -15,12 +15,13 @@ namespace ATAY_webcam_image_processing
 {
     public class DetectionLibrary
     {
-        public static Bitmap ProcessImage(Bitmap img)
+        public static Bitmap ProcessImage(Bitmap img, ref float[] Circle_list)
         {
             using (UMat gray = new UMat())
             using (UMat cannyEdges = new UMat())
             using (Mat circleImage = new Mat(img.Size, DepthType.Cv8U, 3)) //image to draw circles on
             {
+                int currSize = 0;
                 Mat converted_img = img.ToMat();
 
                 //Convert the image to grayscale and filter out the noise
@@ -31,8 +32,8 @@ namespace ATAY_webcam_image_processing
 
                 #region circle detection
                 double cannyThreshold = 180.0;
-                double circleAccumulatorThreshold = 120;
-                CircleF[] circles = CvInvoke.HoughCircles(gray, HoughModes.Gradient, 1.0, 15.0, cannyThreshold, circleAccumulatorThreshold, 0, img.Height/4);
+                double circleAccumulatorThreshold = 100;
+                CircleF[] circles = CvInvoke.HoughCircles(gray, HoughModes.Gradient, 1.0, 20.0, cannyThreshold, circleAccumulatorThreshold, 0, img.Height/4);
                 #endregion
 
 
@@ -54,11 +55,14 @@ namespace ATAY_webcam_image_processing
                 foreach (CircleF circle in circles)
                 {
                     Console.WriteLine($"Circle center: ({circle.Center.X}, {circle.Center.Y}), Radius: {circle.Radius}");
+                    Circle_list[currSize] = circle.Radius;
+                    currSize++;
                     Img_Result_Bgr.Draw(circle, new Bgr(Color.Red), 2);
                 }
-                    
+
 
                 #endregion
+                MessageBox.Show("Total Circles Detected: " + currSize);
                 return Img_Result_Bgr.ToBitmap();
             }
         }

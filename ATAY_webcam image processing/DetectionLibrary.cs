@@ -62,9 +62,26 @@ namespace ATAY_webcam_image_processing
 
 
                 #endregion
-                MessageBox.Show("Total Circles Detected: " + currSize);
                 return Img_Result_Bgr.ToBitmap();
             }
+        }
+
+        public static int CoinChecker(double radius)
+        {
+            int CoinType;
+
+            if (radius > 75.0)
+                CoinType = 0; //5 pesos coin
+            else if (radius > 65.0)
+                CoinType = 1; //1 peso coin
+            else if (radius > 55.0)
+                CoinType = 2; //25 centavos
+            else if (radius > 45.0)
+                CoinType = 3; // 10 centavos
+            else
+                CoinType = 4; // 5 centavos
+
+            return CoinType;
         }
     }
 }

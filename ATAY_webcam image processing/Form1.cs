@@ -205,20 +205,7 @@ namespace ATAY_webcam_image_processing
 
         private void LaplascianToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //processed = ImageProcessingLib.Emboss(loaded, 1);
-            float[] Circle_r = new float[100];
-            MessageBox.Show("Drawing Circle");
-            Bitmap detectedCircle = DetectionLibrary.ProcessImage(loaded, ref Circle_r);
-            PicBox_Output.Image = detectedCircle;
-
-            int x = 0;
-            while (Circle_r[x] != 0)
-            {
-                txtBox_Report.AppendText(Circle_r[x].ToString());
-                txtBox_Report.AppendText("\n");
-                x++;
-            }
-
+            processed = ImageProcessingLib.Emboss(loaded, 1);
         }
 
         private void horzVertToolStripMenuItem_Click(object sender, EventArgs e)
@@ -244,6 +231,35 @@ namespace ATAY_webcam_image_processing
         private void verticalOnlyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PicBox_Output.Image = ImageProcessingLib.Emboss(loaded, 6);
+        }
+
+        private void countCoinsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            float[] Circle_r = new float[100];
+            int[] CoinCount = new int[5];
+            MessageBox.Show("Drawing Circle");
+            Bitmap detectedCircle = DetectionLibrary.ProcessImage(loaded, ref Circle_r);
+            PicBox_Output.Image = detectedCircle;
+
+            int x = 0;
+            while (Circle_r[x] != 0)
+            {
+                CoinCount[DetectionLibrary.CoinChecker(Circle_r[x])]++; 
+                txtBox_Report.AppendText(Circle_r[x].ToString());
+                txtBox_Report.AppendText("\n");
+                x++;
+            }
+
+            CoinCount[DetectionLibrary.CoinChecker(Circle_r[x])]++;
+            x++;
+
+            double TotalValue = (CoinCount[0] * 5) + (CoinCount[1] * 1) + (CoinCount[2] * .25) + (CoinCount[3] * .1) + (CoinCount[4] * .05);
+            MessageBox.Show("Total Coins Detected: " + x + "\n5 Peso Coins: " + CoinCount[0]
+                    + "\n1 Peso Coins: " + CoinCount[1]
+                    + "\n25 centavo Coins: " + CoinCount[2]
+                    + "\n10 centavo Coins: " + CoinCount[3]
+                    + "\n5 centavo Coins: " + CoinCount[4]
+                    + "\nTotal Value: " + TotalValue);
         }
     }
 }

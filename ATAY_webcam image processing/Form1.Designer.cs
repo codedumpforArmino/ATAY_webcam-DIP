@@ -57,6 +57,7 @@
             inversionToolStripMenuItem1 = new ToolStripMenuItem();
             histogramToolStripMenuItem1 = new ToolStripMenuItem();
             sepiaToolStripMenuItem1 = new ToolStripMenuItem();
+            countCoinsToolStripMenuItem = new ToolStripMenuItem();
             openFileDialog1 = new OpenFileDialog();
             saveFileDialog1 = new SaveFileDialog();
             PicBox_Input = new PictureBox();
@@ -73,7 +74,7 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(24, 24);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, dIPToolStripMenuItem, activateCameraToolStripMenuItem, deactivateCameraToolStripMenuItem, cameraToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, dIPToolStripMenuItem, activateCameraToolStripMenuItem, deactivateCameraToolStripMenuItem, cameraToolStripMenuItem, countCoinsToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1498, 33);
@@ -269,6 +270,13 @@
             sepiaToolStripMenuItem1.Text = "Sepia";
             sepiaToolStripMenuItem1.Click += sepiaToolStripMenuItem1_Click;
             // 
+            // countCoinsToolStripMenuItem
+            // 
+            countCoinsToolStripMenuItem.Name = "countCoinsToolStripMenuItem";
+            countCoinsToolStripMenuItem.Size = new Size(125, 29);
+            countCoinsToolStripMenuItem.Text = "Count Coins";
+            countCoinsToolStripMenuItem.Click += countCoinsToolStripMenuItem_Click;
+            // 
             // openFileDialog1
             // 
             openFileDialog1.FileName = "openFileDialog1";
@@ -323,10 +331,12 @@
             // 
             // txtBox_Report
             // 
-            txtBox_Report.Location = new Point(674, 214);
+            txtBox_Report.Location = new Point(698, 195);
+            txtBox_Report.Multiline = true;
             txtBox_Report.Name = "txtBox_Report";
+            txtBox_Report.ReadOnly = true;
             txtBox_Report.ScrollBars = ScrollBars.Vertical;
-            txtBox_Report.Size = new Size(146, 31);
+            txtBox_Report.Size = new Size(105, 369);
             txtBox_Report.TabIndex = 5;
             // 
             // Form1
@@ -390,5 +400,6 @@
         private ToolStripMenuItem horizontalOnlyToolStripMenuItem;
         private ToolStripMenuItem verticalOnlyToolStripMenuItem;
         private TextBox txtBox_Report;
+        private ToolStripMenuItem countCoinsToolStripMenuItem;
     }
 }
